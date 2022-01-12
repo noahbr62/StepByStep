@@ -2,6 +2,7 @@ package com.example.stepbystep;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     double MagnitudeDelta = Magnitude - MagnitudePrevious;
                     MagnitudePrevious = Magnitude;
 
-                    if (MagnitudeDelta > 6){
+                    if (MagnitudeDelta > 5){
                         stepCount++;
                     }
                     editText.setText(stepCount.toString());
@@ -49,7 +50,30 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-
         sensorManager.registerListener(stepDetector, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.putInt("stepCount", stepCount);
+        editor.apply();
+    }
+
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.putInt("stepCount", stepCount);
+        editor.apply();
+    }
+
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        stepCount = sharedPreferences.getInt("stepCount", 0);
     }
 }
