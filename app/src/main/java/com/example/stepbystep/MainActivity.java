@@ -1,6 +1,10 @@
 package com.example.stepbystep;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.content.BroadcastReceiver;
@@ -20,10 +24,12 @@ import android.os.health.SystemHealthManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Observer;
+
 public class MainActivity extends AppCompatActivity {
 
+    private static final String COUNTER_STATE = "stepCount";
     private Integer stepCount = 0;
-    static final String LOG_TAG = "ServiceActivity";
     private double MagnitudePrevious = 0;
 
     @Override
@@ -63,5 +69,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         stopService(new Intent(this, MyService.class));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt("stepCount", this.stepCount);
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        this.stepCount = savedInstanceState.getInt("stepCount");
     }
 }
