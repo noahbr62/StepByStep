@@ -7,29 +7,31 @@
     android:screenOrientation="portrait"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="130dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="155dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stepbystep"
+        app:srcCompat="@drawable/loading" />
+
     <TextView
         android:id="@+id/stepbystep"
         android:layout_width="311dp"
-        android:layout_height="73dp"
-        android:layout_marginTop="119dp"
-        android:layout_marginBottom="186dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="98dp"
+        android:layout_marginBottom="271dp"
         android:autoSizeTextType="uniform"
         android:text="StepByStep"
-        app:layout_constraintBottom_toTopOf="@+id/counter"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView"-->
-    <!--        android:layout_width="152dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        android:layout_marginBottom="310dp"-->
-    <!--        android:autoSizeTextType="uniform"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/stepbystep" />-->
 
     <EditText
         android:id="@+id/counter"
@@ -43,7 +45,9 @@
         android:saveEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stepbystep" />
+        app:layout_constraintTop_toBottomOf="@+id/stepbystep"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

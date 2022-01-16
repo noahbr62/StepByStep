@@ -2,11 +2,14 @@ package com.example.stepbystep;
 
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -33,6 +36,7 @@ public class MyService extends Service {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
                 sendBroadcastMessage(sensorEvent);
+
             }
 
             @Override
