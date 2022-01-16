@@ -55,11 +55,9 @@ public class MainActivity extends AppCompatActivity {
                         double MagnitudeDelta = Magnitude - MagnitudePrevious;
                         MagnitudePrevious = Magnitude;
 
-                        if (MagnitudeDelta > 5){
+                        animation.start();
+                        if (MagnitudeDelta > 6){
                             stepCount++;
-                            animation.start();
-                        } else {
-                            animation.stop();
                         }
                         editText.setText(stepCount+"");
                     }
