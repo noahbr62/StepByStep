@@ -2,18 +2,13 @@ package com.example.stepbystep;
 
 import android.app.Service;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
-import android.widget.EditText;
-import android.widget.ImageView;
-
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import java.util.List;
 
 public class MyService extends Service {
 
@@ -36,7 +31,6 @@ public class MyService extends Service {
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
                 sendBroadcastMessage(sensorEvent);
-
             }
 
             @Override
@@ -53,11 +47,10 @@ public class MyService extends Service {
             intent.putExtra(EXTRA_X_VALUE, sensorEvent.values[0]);
             intent.putExtra(EXTRA_Y_VALUE, sensorEvent.values[1]);
             intent.putExtra(EXTRA_Z_VALUE, sensorEvent.values[2]);
-            System.out.println("x: "+sensorEvent.values[0]+", y: "+sensorEvent.values[1]+", z: "+sensorEvent.values[2]);
+            System.out.println("x: " + sensorEvent.values[0] + ", y: " + sensorEvent.values[1] + ", z: " + sensorEvent.values[2]);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         }
     }
-
 
     @Override
     public IBinder onBind(Intent intent) {
