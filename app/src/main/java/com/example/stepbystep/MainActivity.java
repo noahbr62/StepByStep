@@ -7,6 +7,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -19,6 +21,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.health.SystemHealthManager;
@@ -31,8 +34,15 @@ import java.util.Observer;
 public class MainActivity extends AppCompatActivity {
 
     private static final String COUNTER_STATE = "stepCount";
+
+    private static final String CHANNEL_ID = "defaultChannel";
+    private static final String CHANNEL_NAME = "Default Channel";
+    private NotificationManager notificationManager;
+
     private Integer stepCount = 0;
+    private Integer setStepCount = 0;
     private double MagnitudePrevious = 0;
+
     AnimationDrawable animation;
 
 
@@ -43,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
         final EditText editText = (EditText) findViewById(R.id.counter);
         ImageView loading = (ImageView) findViewById(R.id.imageView);
         animation = (AnimationDrawable) loading.getDrawable();
+        this.notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 new BroadcastReceiver() {
@@ -58,11 +73,24 @@ public class MainActivity extends AppCompatActivity {
                         if (MagnitudeDelta > 6){
                             animation.start();
                             stepCount++;
+                            if (stepCount - 100 > setStepCount) {
+                                setStepCount = stepCount;
+                                sendNotification();
+                            }
                         }
                         editText.setText(stepCount+"");
                     }
                 }, new IntentFilter(MyService.ACTION_SENSOR_BROADCAST)
         );
+    }
+
+    private void sendNotification() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(android.R.drawable.ic_media_play)
+                .setContentTitle("You moved a lot")
+                .setContentText("you moved around "+stepCount+" steps")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        notificationManager.notify(0, builder.build());
     }
 
     @Override
