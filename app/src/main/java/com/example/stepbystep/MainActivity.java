@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         double MagnitudeDelta = Magnitude - MagnitudePrevious;
                         MagnitudePrevious = Magnitude;
 
-                        if (MagnitudeDelta > 6) {
+                        if (MagnitudeDelta > 5) {
                             animation.start();
                             stepCount++;
                             if (stepCount - 100 > setStepCount) {
